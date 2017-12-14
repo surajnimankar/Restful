@@ -26,8 +26,12 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public Student findStudentByRollNo(int rollNo){
+    public Student findStudentByRollNo(String rollNo){
         System.out.println("**********************Looking for RollNo: " + rollNo);
+        if(rollNo.equalsIgnoreCase("100")) {
+            return null;
+
+        }
         Student student1 = new Student();
         student1.setName("Suraj Nimankar");
         student1.setRollNo(1);
@@ -38,6 +42,8 @@ public class RepositoryImpl implements Repository {
     @Override
     public Student createStudent(Student student){
         System.out.println("Hurrrrey we have got the student object...!!!");
+        System.out.println(student.getName());
+        System.out.println(student.getRollNo());
 
         return student;
     }

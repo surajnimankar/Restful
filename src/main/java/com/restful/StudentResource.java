@@ -2,6 +2,7 @@ package com.restful;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("students")
@@ -18,8 +19,15 @@ public class StudentResource {
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Path("{rollno}")
-    public Student findStudentByRollNo(@PathParam("rollno") int rollNo) {
-        return repository.findStudentByRollNo(rollNo);
+    public Response findStudentByRollNo(@PathParam("rollno") String rollNo) {
+        if(rollNo == null || rollNo.equalsIgnoreCase("null")) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+        Student student = repository.findStudentByRollNo(rollNo);
+        if(student == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        return Response.ok().entity(student).build();
     }
 
     @POST
